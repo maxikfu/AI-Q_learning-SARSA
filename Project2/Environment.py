@@ -4,6 +4,7 @@ import sys
 from tkinter import *
 
 
+
 class World:
 	UNIT = 60   # pixels
 	environment_height = 5  # grid height
@@ -112,11 +113,13 @@ class World:
 			if int(self.canvas.itemcget(self.pickUpId[i],"text"))>0:
 				actions.append("P")
 		return actions
-		def reset(self,agent):
-			agent.x = 5
-			agent.y = 1
-			for iD in self.pickUpId:
-				self.canvas.itemconfigure(iD,text=4)
-			for iD in self.dropOffId:
-				self.canvas.itemconfigure(iD,text=0)
+	def reset(self,agent):
+		agent.x = 5
+		agent.y = 1
+		self.canvas.coords(agent.id,270,30)
+		#print(self.canvas.coords(agent.id))
+		for iD in self.pickUpId:
+			self.canvas.itemconfigure(iD,text=4)
+		for iD in self.dropOffId:
+			self.canvas.itemconfigure(iD,text=0)
 			

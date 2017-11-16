@@ -2,6 +2,14 @@ import random
 
 #contains policyes what will return next action
 class Policy:
+	def acceptingLowerQValue(slef,availableActions,maxValueAction):
+		r = random.random()
+		if 0.85 >= r:
+			return maxValueAction
+		else:
+			availableActions.remove(maxValueAction)
+			action = random.sample(availableActions,1).pop()
+			return action
 	def PRANDOM(self,world,agent,q_learning):
 		actionList=[]
 		if world.isPickUpLocationApplicable(agent):
@@ -35,8 +43,33 @@ class Policy:
 				q_learning.q_learning_process('E',world,agent)
 				agent.East(world)
 
-	def PEPLOIT():
-		return None
+	def PEPLOIT(self,world,agent,q_learning):
+		if world.isPickUpLocationApplicable(agent):
+			#apply pick up operator
+			q_learning.q_learning_process('P',world,agent)
+			agent.PickUp(world)
+		elif world.isDropOffLocationApplicable(agent):
+			#apply drop off operator
+			q_learning.q_learning_process('D',world,agent)
+			agent.DropOff(world)
+		else:# choose action from acceptingLowerQValue()
+			actionList = world.availableActions(agent)
+			#print(actionList)
+			currentState = str(agent.x)+str(agent.y)
+			maxValue, maxValueAction = q_learning.max_q_fromactions(actionList,currentState,agent.block,agent)
+			chooseAction=self.acceptingLowerQValue(actionList,maxValueAction)
+			q_learning.q_learning_process(chooseAction,world,agent) #computng Q value for current state and putting it in the tables
+			
+
+			if chooseAction == "N": #we just move agent in new location
+				agent.North(world)
+			elif chooseAction == "S":
+				agent.South(world)
+			elif chooseAction == "W":
+				agent.West(world)
+			else:
+				agent.East(world)
+
 	def PGREEDY(self,world,agent,q_learning):#choose move with bigger q value
 		#actionList=[]
 		if world.isPickUpLocationApplicable(agent):
@@ -53,7 +86,6 @@ class Policy:
 			#print(actionList)
 			currentState = str(agent.x)+str(agent.y)
 			maxValue, maxValueAction = q_learning.max_q_fromactions(actionList,currentState,agent.block,agent)
-			#print(maxValueAction, maxValue)
 			q_learning.q_learning_process(maxValueAction,world,agent) #computng Q value for current state and putting it in the tables
 			if maxValueAction == "N": #we just move agent in new location
 				agent.North(world)

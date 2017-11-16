@@ -7,11 +7,12 @@ import pandas as pd
 #visualizing Q-table in canvas parallel to main screen
 class Q_Table:
 	def __init__(self,xtitle):
+		self.qTable = Tk(  )
+		#self.frame = Frame(self.qTable)
 		self.title = xtitle
-		pixels = 100   # pixels
+		pixels = 110   # pixels
 		height = 5  # grid height
 		weight = 5  # grid width
-		self.qTable = Tk(  )
 		self.qTable.title(self.title)
 		self.qTableCanvas = Canvas(self.qTable,height=height*pixels,width=weight*pixels)
 		self.qTable.configure(bg="white")
@@ -85,6 +86,20 @@ class Q_Table:
 	#update values 
 	def updateValues(self,q_table):
 			for index, row in q_table.iterrows():
+				a = ['N','S','W','E']
+				if index in ['11','21','31','41','51']:
+					a.remove('N')
+				if index in ['15','25','35','45','55']:
+					a.remove('S')
+				if index in ['11','12','13','14','15']:
+					a.remove('W')
+				if index in ['51','52','53','54','55']:
+					a.remove('E')
+				maxValue = max(q_table.ix[index,a])
 				for col in q_table:
 					if col != 'P' and col !='D':
-						self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],3))
+						if maxValue == q_table.ix[index,col]:
+							self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],3),fill='Green')
+						else:
+							self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],3),fill='Red')
+
