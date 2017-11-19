@@ -3,7 +3,6 @@
 pickUpDropOffReward = 12
 movingReward = -1
 
-
 class Agent:
 	#initializing agent with attributes
 	def __init__(self,world):
@@ -13,7 +12,7 @@ class Agent:
 		self.y = 1
 		self.block = False #if True means carring block at this moment
 		self.bankAccount = 0 #reward agent recived at the end of program(way how to compare experiments)
-		
+		self.firstLocationFilled = False
 	#carring block
 	def North(self,world): #make agent move north
 		if self.y != 1:
@@ -53,11 +52,14 @@ class Agent:
 			numBoxes=int(world.canvas.itemcget(world.dropOffId[i],"text"))
 			if numBoxes<8:
 				newValue = numBoxes+1
+				if newValue == 8:
+					self.firstLocationFilled = True
 				world.totalBlocks = world.totalBlocks + 1 
 				world.canvas.itemconfigure(world.dropOffId[i],text=newValue)
 				self.block=False
 				world.canvas.itemconfigure(self.id,text="A")
 				self.bankAccount += pickUpDropOffReward
+
 	#returns new state but, with no changing agent location
 	def new_State_Creator(self,action):
 		if action == 'P' or action == 'D':

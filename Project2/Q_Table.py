@@ -10,12 +10,18 @@ class Q_Table:
 		self.qTable = Tk(  )
 		#self.frame = Frame(self.qTable)
 		self.title = xtitle
-		pixels = 110   # pixels
+		pixels = 150   # pixels
 		height = 5  # grid height
 		weight = 5  # grid width
 		self.qTable.title(self.title)
 		self.qTableCanvas = Canvas(self.qTable,height=height*pixels,width=weight*pixels)
 		self.qTable.configure(bg="white")
+		self.qTableCanvas.create_rectangle(0, 0,pixels, pixels, fill='lightblue')
+		self.qTableCanvas.create_rectangle(0, (4-1)*pixels,pixels, 4*pixels, fill='lightblue')
+		self.qTableCanvas.create_rectangle(2*pixels, 2*pixels,3*pixels, 3*pixels, fill='lightblue')
+		self.qTableCanvas.create_rectangle(4*pixels, 4*pixels,5*pixels, 5*pixels, fill='lightblue')
+		self.qTableCanvas.create_rectangle(0, 4*pixels,pixels, 5*pixels, fill='lightgreen')
+		self.qTableCanvas.create_rectangle(3*pixels, (4-1)*pixels,4*pixels, 4*pixels, fill='lightgreen')
 		# create grids
 		for c in range(0, weight * pixels, pixels):
 			x0, y0, x1, y1 = c, 0, c, height * pixels
@@ -52,7 +58,7 @@ class Q_Table:
 			xx = 1
 			col = 'E'
 			while x < height*pixels-(pixels/2)/2:
-				value = self.qTableCanvas.create_text(x,y,fill="black",font="Times 10 italic bold",text=0)
+				value = self.qTableCanvas.create_text(x,y,fill="black",font="Times 18 italic bold",text=0)
 				row = str(xx)+str(yy)
 				self.canvasQId.ix[row,col] = value
 				x+=pixels/2
@@ -71,7 +77,7 @@ class Q_Table:
 			yy=1
 			col = 'S'
 			while y < height*pixels-(pixels/2)/2:
-				value = self.qTableCanvas.create_text(x,y,fill="black",font="Times 10 italic bold",text=0)
+				value = self.qTableCanvas.create_text(x,y,fill="black",font="Times 18 italic bold",text=0)
 				row = str(xx)+str(yy)
 				self.canvasQId.ix[row,col] = value
 				y+=pixels/2
@@ -99,7 +105,6 @@ class Q_Table:
 				for col in q_table:
 					if col != 'P' and col !='D':
 						if maxValue == q_table.ix[index,col]:
-							self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],3),fill='Green')
+							self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],2),fill='Green')
 						else:
-							self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],3),fill='Red')
-
+							self.qTableCanvas.itemconfigure(self.canvasQId.ix[index,col],text=round(q_table.ix[index,col],2),fill='Red')

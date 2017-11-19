@@ -1,0 +1,12 @@
+Iteration number:1 Steps taken to complite  796 Time running = 64.28241753578186 bankAccount = -380
+Iteration number:2 Steps taken to complite  842 Time running = 62.73986887931824 bankAccount = -426
+Iteration number:3 Steps taken to complite  1108 Time running = 87.78704810142517 bankAccount = -692
+Totoal steps reached 3000. Printing mid Q tables in files
+Iteration number:4 Steps taken to complite  368 Time running = 29.29701590538025 bankAccount = 48
+Iteration number:5 Steps taken to complite  388 Time running = 29.528043270111084 bankAccount = 28
+Iteration number:6 Steps taken to complite  422 Time running = 32.322028160095215 bankAccount = -6
+Iteration number:7 Steps taken to complite  252 Time running = 19.256396055221558 bankAccount = 164
+Iteration number:8 Steps taken to complite  314 Time running = 23.708014011383057 bankAccount = 102
+Iteration number:9 Steps taken to complite  272 Time running = 20.848555088043213 bankAccount = 144
+Iteration number:10 Steps taken to complite  458 Time running = 36.798736572265625 bankAccount = -42
+Iteration number:11 Steps taken to complite  370 Time running = 29.08770751953125 bankAccount = 46

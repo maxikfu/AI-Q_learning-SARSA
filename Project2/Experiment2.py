@@ -23,33 +23,44 @@ iteration = 1
 stepsToFinish = 0
 totalSteps = 0
 while not result and totalSteps <=6000:
-	if totalSteps == 3000:
+	if totalSteps == 200:
 		print("Totoal steps reached 3000. Printing mid Q tables in files")
 		ps=q_table_visual_not_block.qTableCanvas.postscript(colormode='color')
 		img = Image.open(io.BytesIO(ps.encode('utf-8')))
 		img.save('MidNonBlock.png',"png",quality=99)
+		img.close()
 		fo = open('Mid_Q_table_NO_BLOCK.txt', 'w')
 		sys.stdout = fo
 		print(q_learning.q_table_nonBlock)
 		fo.close()
 		fo = open('Mid_Q_table_BLOCK.txt', 'w')
-		ps=q_table_visual_block.qTableCanvas.postscript(colormode='color')
-		img = Image.open(io.BytesIO(ps.encode('utf-8')))
-		img.save('MidBlock.png',"png",quality=99)
 		sys.stdout = fo
 		print(q_learning.q_table_block)
 		fo.close()
+		ps=q_table_visual_block.qTableCanvas.postscript(colormode='color')
+		img = Image.open(io.BytesIO(ps.encode('utf-8')))
+		img.save('MidBlock.png',"png",quality=99)
+		img.close()
 		sys.stdout = fout
 		world.root.update()
 		runningTime= time.time() - start_time
 		#time.sleep(20)
-	if totalSteps <3000 :
+	if totalSteps <=200 :
 		policy.PRANDOM(world,agent,q_learning)
 	else:
 		#time.sleep(10)
-		policy.PGREEDY(world,agent,q_learning)
+		policy.PEPLOIT(world,agent,q_learning)
 	#policy.PEPLOIT(world,agent,q_learning)
 	world.root.update()
+	if agent.firstLocationFilled and iteration==1:
+		ps=q_table_visual_not_block.qTableCanvas.postscript(colormode='color')
+		img = Image.open(io.BytesIO(ps.encode('utf-8')))
+		img.save('FirstFilled_NONBlock.png',"png",quality=99)
+		img.close()
+		ps=q_table_visual_block.qTableCanvas.postscript(colormode='color')
+		img = Image.open(io.BytesIO(ps.encode('utf-8')))
+		img.save('FirstFilled_Block.png',"png",quality=99)
+		img.close()
 	q_table_visual_not_block.updateValues(q_learning.q_table_nonBlock)
 	q_table_visual_not_block.qTable.update()
 	q_table_visual_block.updateValues(q_learning.q_table_block)
@@ -58,6 +69,15 @@ while not result and totalSteps <=6000:
 	totalSteps+=1
 	if world.totalBlocks== 16:
 		#result = True	
+		if iteration == 1:
+			ps=q_table_visual_not_block.qTableCanvas.postscript(colormode='color')
+			img = Image.open(io.BytesIO(ps.encode('utf-8')))
+			img.save('FirstTerminal_NONBlock.png',"png",quality=99)
+			img.close()
+			ps=q_table_visual_block.qTableCanvas.postscript(colormode='color')
+			img = Image.open(io.BytesIO(ps.encode('utf-8')))
+			img.save('FirstTerminal_Block.png',"png",quality=99)
+			img.close()
 		world.reset(agent)
 		runningTime= time.time() - start_time
 		print("Iteration number:"+ str(iteration) +  " Steps taken to complite  " + str(stepsToFinish)+" Time running = "+str(runningTime)+ " bankAccount = "+str(agent.bankAccount))
@@ -73,6 +93,7 @@ fout = open('Final_Q_table_NO_BLOCK.txt', 'w')
 ps=q_table_visual_not_block.qTableCanvas.postscript(colormode='color')
 img = Image.open(io.BytesIO(ps.encode('utf-8')))
 img.save('FinalNONBlock.png',"png",quality=99)
+img.close()
 sys.stdout = fout
 print(q_learning.q_table_nonBlock)
 fout.close()
@@ -80,7 +101,9 @@ fout = open('Final_Q_table_BLOCK.txt', 'w')
 ps=q_table_visual_block.qTableCanvas.postscript(colormode='color')
 img = Image.open(io.BytesIO(ps.encode('utf-8')))
 img.save('FinalBlock.png',"png",quality=99)
+img.close()
 sys.stdout = fout
 print(q_learning.q_table_block)
 fout.close()
-world.root.mainloop()
+
+

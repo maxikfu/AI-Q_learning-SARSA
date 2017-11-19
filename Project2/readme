@@ -1,0 +1,8 @@
+To run Experiment you need to type in cmd line: 
+python3 Experiment1.py
+or
+python3 Experiment2.py
+or
+python3 Experiment3.py
+
+These Experiments will produce couple text files containing Q tables "Final_Q_table_BLOCK.txt" it means Q table if agent carries the block and "Final_Q_table_NO_BLOCK.txt" if agent doesn't carry the block. It also takes the screen shots of visualisation of Q tables and saves it as .png format.
